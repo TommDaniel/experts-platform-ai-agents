@@ -1,0 +1,12 @@
+pre-commit:
+  parallel: true
+  commands:
+    lint-staged:
+      run: bunx lint-staged
+      stage_fixed: true
+
+commit-msg:
+  parallel: true
+  commands:
+    commitlint:
+      run: bunx commitlint --edit "$1"

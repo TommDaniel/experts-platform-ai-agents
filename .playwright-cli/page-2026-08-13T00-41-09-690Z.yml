@@ -1,0 +1,56 @@
+- generic [ref=f11e3]:
+    - link "Skip to main content" [ref=f11e4] [cursor=pointer]:
+        - /url: "#main-content"
+    - complementary [ref=f11e5]:
+        - generic [ref=f11e9]:
+            - paragraph [ref=f11e10]: Coders University
+            - generic [ref=f11e23]:
+                - generic [ref=f11e24]:
+                    - heading [level=2] [ref=f11e25]: Turn your expertise into a team of AI agents.
+                    - paragraph [ref=f11e26]: Coders University brings your experts and connectors together in one place.
+                - list [ref=f11e27]:
+                    - listitem [ref=f11e28]:
+                        - generic [ref=f11e33]:
+                            - paragraph [ref=f11e34]: Expert agents
+                            - paragraph [ref=f11e35]: Custom AI agents built from your team's knowledge.
+                    - listitem [ref=f11e36]:
+                        - generic [ref=f11e44]:
+                            - paragraph [ref=f11e45]: Connectors
+                            - paragraph [ref=f11e46]: Plug into the tools you already use every day.
+                    - listitem [ref=f11e47]:
+                        - generic [ref=f11e52]:
+                            - paragraph [ref=f11e53]: Private by design
+                            - paragraph [ref=f11e54]: Your data stays yours — secure and controlled.
+    - main [ref=f11e55]:
+        - generic [ref=f11e57]:
+            - heading "Create your account" [level=1] [ref=f11e58]
+            - paragraph [ref=f11e59]: Join Coders University to manage your custom AI agents.
+            - generic [ref=f11e60]:
+                - generic [ref=f11e62]:
+                    - generic [ref=f11e63]:
+                        - generic [ref=f11e64]:
+                            - generic [ref=f11e65]: First name
+                            - textbox "First name" [ref=f11e66]:
+                                - /placeholder: Ada
+                        - generic [ref=f11e67]:
+                            - generic [ref=f11e68]: Last name
+                            - textbox "Last name" [ref=f11e69]:
+                                - /placeholder: Lovelace
+                    - generic [ref=f11e70]:
+                        - generic [ref=f11e71]: Email
+                        - textbox "Email" [ref=f11e72]:
+                            - /placeholder: you@example.com
+                    - generic [ref=f11e73]:
+                        - generic [ref=f11e74]:
+                            - generic [ref=f11e75]: Password
+                            - textbox "Password" [ref=f11e76]:
+                                - /placeholder: ••••••••
+                        - generic [ref=f11e77]:
+                            - generic [ref=f11e78]: Confirm password
+                            - textbox "Confirm password" [ref=f11e79]:
+                                - /placeholder: ••••••••
+                    - button "Create account" [ref=f11e80]
+                - paragraph [ref=f11e81]:
+                    - text: Already have an account?
+                    - link "Sign in" [ref=f11e82] [cursor=pointer]:
+                        - /url: /auth/sign-in

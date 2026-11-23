@@ -1,0 +1,137 @@
+name: coders-university-local
+
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: cu-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  mimir:
+    image: grafana/mimir:3.1.4
+    container_name: cu-mimir
+    command: -config.file=/etc/mimir/mimir.yaml
+    ports:
+      - "9009:9009"
+    volumes:
+      - mimir-data:/var/mimir
+      - ./docker/mimir/mimir.yaml:/etc/mimir/mimir.yaml:ro
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "-", "http://localhost:9009/ready"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  loki:
+    image: grafana/loki:3.7.6
+    container_name: cu-loki
+    user: "0"
+    command: -config.file=/etc/loki/loki.yaml
+    ports:
+      - "3100:3100"
+    volumes:
+      - loki-data:/var/loki
+      - ./docker/loki/loki.yaml:/etc/loki/loki.yaml:ro
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "-", "http://localhost:3100/ready"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  tempo:
+    image: grafana/tempo:2.9.4
+    container_name: cu-tempo
+    command: -config.file=/etc/tempo/tempo.yaml
+    ports:
+      - "3200:3200"
+      - "4317:4317"
+      - "4318:4318"
+    volumes:
+      - tempo-data:/var/tempo
+      - ./docker/tempo/tempo.yaml:/etc/tempo/tempo.yaml:ro
+
+  grafana:
+    image: grafana/grafana:13.0.6
+    container_name: cu-grafana
+    environment:
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: "Admin"
+      GF_SECURITY_ADMIN_USER: "admin"
+      GF_SECURITY_ADMIN_PASSWORD: "admin"
+    ports:
+      - "3001:3000"
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./docker/grafana/datasources:/etc/grafana/provisioning/datasources:ro
+    depends_on:
+      mimir:
+        condition: service_started
+      loki:
+        condition: service_started
+      tempo:
+        condition: service_started
+
+  weaviate:
+    image: semitechnologies/weaviate:1.28.4
+    container_name: cu-weaviate
+    ports:
+      - "8080:8080"
+      - "50051:50051"
+    environment:
+      QUERY_DEFAULTS_LIMIT: 25
+      AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: "true"
+      PERSISTENCE_DATA_PATH: "/var/lib/weaviate"
+      DEFAULT_VECTORIZER_MODULE: "none"
+      ENABLE_MODULES: ""
+      CLUSTER_HOSTNAME: "node1"
+    volumes:
+      - weaviate-data:/var/lib/weaviate
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "-", "http://localhost:8080/v1/.well-known/ready"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+
+  agents:
+    build:
+      context: .
+      dockerfile: apps/agents/Dockerfile
+    container_name: cu-agents
+    ports:
+      - "2024:2024"
+    environment:
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      LANGSMITH_API_KEY: ${LANGSMITH_API_KEY:-}
+      LANGCHAIN_TRACING_V2: ${LANGCHAIN_TRACING_V2:-false}
+      LANGCHAIN_PROJECT: experts-local
+      WEAVIATE_URL: http://weaviate:8080
+      WEAVIATE_HOST: weaviate
+      WEAVIATE_PORT: "8080"
+      UPLOADS_DIR: /uploads
+    volumes:
+      - ./uploads:/uploads
+    depends_on:
+      weaviate:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+
+volumes:
+  postgres-data:
+  mimir-data:
+  loki-data:
+  tempo-data:
+  grafana-data:
+  weaviate-data:

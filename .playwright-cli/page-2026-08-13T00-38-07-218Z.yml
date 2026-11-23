@@ -1,0 +1,46 @@
+- generic [ref=e3]:
+    - link "Skip to main content" [ref=e4] [cursor=pointer]:
+        - /url: "#main-content"
+    - complementary [ref=e5]:
+        - generic [ref=e9]:
+            - paragraph [ref=e10]: Coders University
+            - generic [ref=e23]:
+                - generic [ref=e24]:
+                    - heading [level=2] [ref=e25]: Turn your expertise into a team of AI agents.
+                    - paragraph [ref=e26]: Coders University brings your experts and connectors together in one place.
+                - list [ref=e27]:
+                    - listitem [ref=e28]:
+                        - generic [ref=e33]:
+                            - paragraph [ref=e34]: Expert agents
+                            - paragraph [ref=e35]: Custom AI agents built from your team's knowledge.
+                    - listitem [ref=e36]:
+                        - generic [ref=e44]:
+                            - paragraph [ref=e45]: Connectors
+                            - paragraph [ref=e46]: Plug into the tools you already use every day.
+                    - listitem [ref=e47]:
+                        - generic [ref=e52]:
+                            - paragraph [ref=e53]: Private by design
+                            - paragraph [ref=e54]: Your data stays yours — secure and controlled.
+    - main [ref=e55]:
+        - generic [ref=e57]:
+            - heading "Sign in" [level=1] [ref=e58]
+            - paragraph [ref=e59]: Welcome back. Sign in to access your dashboard.
+            - generic [ref=e60]:
+                - generic [ref=e62]:
+                    - generic [ref=e63]:
+                        - generic [ref=e64]: Email
+                        - textbox "Email" [ref=e65]:
+                            - /placeholder: you@example.com
+                    - generic [ref=e66]:
+                        - generic [ref=e67]: Password
+                        - textbox "Password" [ref=e68]:
+                            - /placeholder: ••••••••
+                    - button "Sign in" [ref=e69]
+                - paragraph [ref=e70]:
+                    - text: Don’t have an account?
+                    - link "Create one" [ref=e71] [cursor=pointer]:
+                        - /url: /auth/sign-up
+                - paragraph [ref=e72]:
+                    - text: Forgot your password?
+                    - link "Reset it" [ref=e73] [cursor=pointer]:
+                        - /url: /auth/forgot-password

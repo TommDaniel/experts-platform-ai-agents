@@ -1,0 +1,52 @@
+- generic [ref=e74]:
+    - link "Skip to main content" [ref=e75] [cursor=pointer]:
+        - /url: "#main-content"
+    - generic [ref=e76]:
+        - generic [ref=e79]:
+            - list [ref=e81]:
+                - listitem [ref=e82]:
+                    - link "Coders University AI platform" [ref=e83] [cursor=pointer]:
+                        - /url: /app
+                        - generic [ref=e97]:
+                            - generic [ref=e98]: Coders University
+                            - generic [ref=e99]: AI platform
+            - generic [ref=e101]:
+                - generic [ref=e102]: Workspace
+                - list [ref=e104]:
+                    - listitem [ref=e105]:
+                        - link "Home" [ref=e106] [cursor=pointer]:
+                            - /url: /app
+                    - listitem [ref=e111]:
+                        - link "Experts" [ref=e112] [cursor=pointer]:
+                            - /url: /app/experts
+                    - listitem [ref=e117]:
+                        - link "Connectors" [ref=e118] [cursor=pointer]:
+                            - /url: /app/connectors
+            - list [ref=e127]:
+                - listitem [ref=e128]:
+                    - button "Sign out" [ref=e129]
+        - main [ref=e134]:
+            - generic [ref=e135]:
+                - button "Toggle Sidebar" [ref=e136]
+                - generic [ref=e138]: Home
+                - button "Account menu" [ref=e140]:
+                    - generic [ref=e141]: LU
+                    - generic [ref=e143]: Load
+            - generic [ref=e145]:
+                - log "Conversation" [ref=e146]:
+                    - paragraph [ref=e149]: o que é Kubernetes?
+                    - paragraph [ref=e153]: (no response)
+                    - paragraph [ref=e156]: segunda pergunta
+                    - paragraph [ref=e160]: (no response)
+                    - paragraph [ref=e163]: terceira pergunta
+                    - paragraph [ref=e167]: (no response)
+                    - paragraph [ref=e170]: quarta pergunta
+                - generic [ref=e171]:
+                    - generic [ref=e172]:
+                        - combobox "Select expert" [ref=e173]:
+                            - generic: CTO
+                        - textbox "Message" [ref=e174]:
+                            - /placeholder: Ask CTO…
+                        - button "Send message" [disabled]
+                    - paragraph [ref=e175]: o que é Kubernetes?
+                - button "Open connections" [ref=e177]

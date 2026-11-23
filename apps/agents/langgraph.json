@@ -1,0 +1,6 @@
+{
+  "node_version": "24",
+  "graphs": {
+    "experts": "./dist/graph.js:graph"
+  }
+}

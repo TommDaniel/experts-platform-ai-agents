@@ -1,0 +1,55 @@
+- generic [ref=f5e3]:
+    - link "Skip to main content" [ref=f5e4] [cursor=pointer]:
+        - /url: "#main-content"
+    - generic [ref=f5e5]:
+        - generic [ref=f5e8]:
+            - list [ref=f5e10]:
+                - listitem [ref=f5e11]:
+                    - link "Coders University AI platform" [ref=f5e12] [cursor=pointer]:
+                        - /url: /app
+                        - generic [ref=f5e26]:
+                            - generic [ref=f5e27]: Coders University
+                            - generic [ref=f5e28]: AI platform
+            - generic [ref=f5e30]:
+                - generic [ref=f5e31]: Workspace
+                - list [ref=f5e33]:
+                    - listitem [ref=f5e34]:
+                        - link "Home" [ref=f5e35] [cursor=pointer]:
+                            - /url: /app
+                    - listitem [ref=f5e40]:
+                        - link "Experts" [ref=f5e41] [cursor=pointer]:
+                            - /url: /app/experts
+                    - listitem [ref=f5e46]:
+                        - link "Connectors" [ref=f5e47] [cursor=pointer]:
+                            - /url: /app/connectors
+            - list [ref=f5e56]:
+                - listitem [ref=f5e57]:
+                    - button "Sign out" [ref=f5e58]
+        - main [ref=f5e63]:
+            - generic [ref=f5e64]:
+                - button "Toggle Sidebar" [ref=f5e65]
+                - generic [ref=f5e67]: Home
+                - button "Account menu" [ref=f5e69]:
+                    - generic [ref=f5e70]: LU
+                    - generic [ref=f5e72]: Load
+            - generic [ref=f5e74]:
+                - generic [ref=f5e75]:
+                    - heading "Home" [level=1] [ref=f5e76]
+                    - paragraph [ref=f5e77]: Welcome, Load. Your experts and connectors will live here.
+                - generic [ref=f5e78]:
+                    - generic [ref=f5e79]:
+                        - generic [ref=f5e80]:
+                            - generic [ref=f5e85]: Experts
+                            - generic [ref=f5e86]: Custom AI agents that codify your team’s knowledge and workflows.
+                        - generic [ref=f5e87]:
+                            - paragraph [ref=f5e88]: No experts yet. Build your first agent to start delegating routine work.
+                            - link "Browse experts" [ref=f5e89] [cursor=pointer]:
+                                - /url: /app/experts
+                    - generic [ref=f5e92]:
+                        - generic [ref=f5e93]:
+                            - generic [ref=f5e101]: Connectors
+                            - generic [ref=f5e102]: Integrations that plug your agents into the tools you already use.
+                        - generic [ref=f5e103]:
+                            - paragraph [ref=f5e104]: No connectors yet. Connect your first integration to unlock agent actions.
+                            - link "Browse connectors" [ref=f5e105] [cursor=pointer]:
+                                - /url: /app/connectors

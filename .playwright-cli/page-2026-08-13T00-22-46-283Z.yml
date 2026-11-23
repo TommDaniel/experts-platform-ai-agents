@@ -1,0 +1,19 @@
+- main [ref=f3e3]:
+    - link "Skip to main content" [ref=f3e4] [cursor=pointer]:
+        - /url: "#main-content"
+    - generic [ref=f3e5]:
+        - paragraph [ref=f3e6]: Coders University
+        - heading "Reset password" [level=1] [ref=f3e7]
+        - paragraph [ref=f3e8]: Choose a new password using the link sent to your email.
+        - generic [ref=f3e9]:
+            - alert [ref=f3e10]:
+                - paragraph [ref=f3e11]: Invalid reset link
+                - paragraph [ref=f3e12]: This link is missing the required token. Please request a new one.
+            - paragraph [ref=f3e13]:
+                - text: Need a new link?
+                - link "Request a new link" [ref=f3e14] [cursor=pointer]:
+                    - /url: /auth/forgot-password
+            - paragraph [ref=f3e15]:
+                - text: Already reset your password?
+                - link "Sign in" [ref=f3e16] [cursor=pointer]:
+                    - /url: /auth/sign-in

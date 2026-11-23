@@ -1,0 +1,19 @@
+[      40ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=f2f20c23:14333
+[  114652ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=f2f20c23:14333
+[  118280ms] [LOG] [vite] server connection lost. Polling for restart... @ http://localhost:5173/@vite/client:998
+[  119433ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=1c76166e:14333
+[  284639ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=0011e5de:14333
+[  875365ms] [LOG] [vite] server connection lost. Polling for restart... @ http://localhost:5173/@vite/client:998
+[  880737ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=3c4b90ae:14333
+[  880771ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/auth/me:0
+[  880772ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/auth/me:0
+[ 6713294ms] [ERROR] WebSocket connection to 'ws://localhost:5173/?token=eVZww7D2eBpG' failed:  @ http://localhost:5173/@vite/client:867
+[ 6713295ms] [LOG] [vite] server connection lost. Polling for restart... @ http://localhost:5173/@vite/client:998
+[ 6717815ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=cafd7fec:14333
+[ 6717852ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/auth/me:0
+[ 6717855ms] [ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://localhost:5173/api/v1/auth/me:0
+[ 8607361ms] [LOG] [vite] server connection lost. Polling for restart... @ http://localhost:5173/@vite/client:998
+[ 8677151ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=42195373:14333
+[ 8677250ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://localhost:5173/api/v1/auth/me:0
+[ 8677257ms] [ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://localhost:5173/api/v1/auth/me:0
+[ 8683700ms] [LOG] [vite] server connection lost. Polling for restart... @ http://localhost:5173/@vite/client:998

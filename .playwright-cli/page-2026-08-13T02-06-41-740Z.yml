@@ -1,0 +1,49 @@
+- generic [ref=f1e6]:
+    - link "Skip to main content" [ref=f1e7] [cursor=pointer]:
+        - /url: "#main-content"
+    - generic [ref=f1e8]:
+        - generic [ref=f1e11]:
+            - list [ref=f1e13]:
+                - listitem [ref=f1e14]:
+                    - link "Coders University AI platform" [ref=f1e15] [cursor=pointer]:
+                        - /url: /app
+                        - generic [ref=f1e29]:
+                            - generic [ref=f1e30]: Coders University
+                            - generic [ref=f1e31]: AI platform
+            - generic [ref=f1e33]:
+                - generic [ref=f1e34]: Workspace
+                - list [ref=f1e36]:
+                    - listitem [ref=f1e37]:
+                        - link "Home" [ref=f1e38] [cursor=pointer]:
+                            - /url: /app
+                    - listitem [ref=f1e43]:
+                        - link "Experts" [ref=f1e44] [cursor=pointer]:
+                            - /url: /app/experts
+                    - listitem [ref=f1e49]:
+                        - link "Connectors" [ref=f1e50] [cursor=pointer]:
+                            - /url: /app/connectors
+            - list [ref=f1e59]:
+                - listitem [ref=f1e60]:
+                    - button "Sign out" [ref=f1e61]
+        - main [ref=f1e66]:
+            - generic [ref=f1e67]:
+                - button "Toggle Sidebar" [ref=f1e68]
+                - generic [ref=f1e70]: Home
+                - button "Account menu" [ref=f1e72]:
+                    - generic [ref=f1e73]: LU
+                    - generic [ref=f1e75]: Load
+            - generic [ref=f1e77]:
+                - alert [ref=f1e98]:
+                    - generic [ref=f1e99]: "Missing credentials. Please pass an `apiKey`, `workloadIdentity`, `adminAPIKey`, or set the `OPENAI_API_KEY` or `OPENAI_ADMIN_KEY` environment variable."
+                    - button "Dismiss" [ref=f1e100]
+                - log "Conversation" [ref=f1e78]:
+                    - paragraph [ref=f1e103]: Summarize the company's current position and top 3 strategic priorities based on my connected data.
+                - generic [ref=f1e91]:
+                    - generic [ref=f1e92]:
+                        - combobox "Select expert" [ref=f1e93]:
+                            - generic: CEO
+                        - textbox "Message" [ref=f1e94]:
+                            - /placeholder: Ask CEO…
+                        - button "Send message" [disabled]
+                    - paragraph [ref=f1e95]: New conversation
+                - button "Open connections" [ref=f1e97]

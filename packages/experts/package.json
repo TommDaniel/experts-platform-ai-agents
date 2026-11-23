@@ -1,0 +1,19 @@
+{
+  "name": "@repo/experts",
+  "version": "0.0.0",
+  "private": true,
+  "type": "commonjs",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "lint": "oxlint src",
+    "types:check": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "*",
+    "typescript": "5.9.2",
+    "vitest": "^4.1.10"
+  }
+}

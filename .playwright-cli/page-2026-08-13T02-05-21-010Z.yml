@@ -1,0 +1,106 @@
+- generic:
+    - generic:
+        - generic:
+            - link:
+                - /url: "#main-content"
+                - text: Skip to main content
+            - generic:
+                - generic:
+                    - generic:
+                        - generic:
+                            - generic:
+                                - list:
+                                    - listitem:
+                                        - link:
+                                            - /url: /app
+                                            - generic:
+                                                - generic: Coders University
+                                                - generic: AI platform
+                            - generic:
+                                - generic:
+                                    - generic: Workspace
+                                    - generic:
+                                        - list:
+                                            - listitem:
+                                                - link:
+                                                    - /url: /app
+                                                    - generic: Home
+                                            - listitem:
+                                                - link:
+                                                    - /url: /app/experts
+                                                    - generic: Experts
+                                            - listitem:
+                                                - link:
+                                                    - /url: /app/connectors
+                                                    - generic: Connectors
+                            - generic:
+                                - list:
+                                    - listitem:
+                                        - button:
+                                            - generic: Sign out
+                - main:
+                    - generic:
+                        - button:
+                            - generic: Toggle Sidebar
+                        - generic: Home
+                        - generic:
+                            - button:
+                                - generic: LU
+                                - generic: Load
+                    - generic:
+                        - generic:
+                            - log "Conversation":
+                                - generic:
+                                    - generic:
+                                        - paragraph: o que é Kubernetes?
+                                - generic:
+                                    - generic:
+                                        - generic:
+                                            - paragraph: (no response)
+                                - generic:
+                                    - generic:
+                                        - paragraph: segunda pergunta
+                                - generic:
+                                    - generic:
+                                        - generic:
+                                            - paragraph: (no response)
+                                - generic:
+                                    - generic:
+                                        - paragraph: terceira pergunta
+                                - generic:
+                                    - generic:
+                                        - generic:
+                                            - paragraph: (no response)
+                                - generic:
+                                    - generic:
+                                        - paragraph: quarta pergunta
+                            - generic:
+                                - generic:
+                                    - combobox:
+                                        - generic: CTO
+                                    - textbox:
+                                        - /placeholder: Ask CTO…
+                                    - button [disabled]
+                                - paragraph: o que é Kubernetes?
+                            - button [ref=e178]
+    - dialog [active] [ref=e180]:
+        - generic [ref=e181]:
+            - heading "Connections" [level=2] [ref=e182]
+            - paragraph [ref=e183]: Connect files or URLs so your experts can answer from your data.
+        - generic [ref=e184]:
+            - generic [ref=e185]:
+                - heading "Add a file" [level=2] [ref=e186]
+                - generic [ref=e187]:
+                    - button "Choose File" [ref=e188]
+                    - button "Choose file" [ref=e189]
+                - paragraph [ref=e190]: PDF, TXT, Markdown, JPG/PNG, MP4, MP3 · up to 50 MB
+            - generic [ref=e191]:
+                - heading "Add a URL" [level=2] [ref=e192]
+                - generic [ref=e193]:
+                    - textbox "External URL to connect" [ref=e194]:
+                        - /placeholder: https://example.com/page
+                    - button "Connect URL" [disabled]
+            - generic [ref=e195]:
+                - heading "Your data" [level=2] [ref=e196]
+                - paragraph [ref=e212]: No connections yet. Add a file or URL to give your experts context.
+        - button "Close" [ref=e198]

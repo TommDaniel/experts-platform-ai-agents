@@ -1,0 +1,13 @@
+- main [ref=f4e3]:
+    - link "Skip to main content" [ref=f4e4] [cursor=pointer]:
+        - /url: "#main-content"
+    - generic [ref=f4e5]:
+        - paragraph [ref=f4e6]: Coders University
+        - heading "Link not valid" [level=1] [ref=f4e7]
+        - paragraph [ref=f4e8]: We couldn’t confirm your account with this link.
+        - generic [ref=f4e9]:
+            - alert [ref=f4e10]: This link is invalid. Sign up again to receive a new confirmation link.
+            - paragraph [ref=f4e11]:
+                - text: Need a new confirmation link?
+                - link "Sign up" [ref=f4e12] [cursor=pointer]:
+                    - /url: /auth/sign-up

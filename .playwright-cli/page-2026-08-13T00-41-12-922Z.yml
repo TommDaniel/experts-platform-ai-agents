@@ -1,0 +1,38 @@
+- generic [ref=f12e3]:
+    - link "Skip to main content" [ref=f12e4] [cursor=pointer]:
+        - /url: "#main-content"
+    - complementary [ref=f12e5]:
+        - generic [ref=f12e9]:
+            - paragraph [ref=f12e10]: Coders University
+            - generic [ref=f12e23]:
+                - generic [ref=f12e24]:
+                    - heading [level=2] [ref=f12e25]: Turn your expertise into a team of AI agents.
+                    - paragraph [ref=f12e26]: Coders University brings your experts and connectors together in one place.
+                - list [ref=f12e27]:
+                    - listitem [ref=f12e28]:
+                        - generic [ref=f12e33]:
+                            - paragraph [ref=f12e34]: Expert agents
+                            - paragraph [ref=f12e35]: Custom AI agents built from your team's knowledge.
+                    - listitem [ref=f12e36]:
+                        - generic [ref=f12e44]:
+                            - paragraph [ref=f12e45]: Connectors
+                            - paragraph [ref=f12e46]: Plug into the tools you already use every day.
+                    - listitem [ref=f12e47]:
+                        - generic [ref=f12e52]:
+                            - paragraph [ref=f12e53]: Private by design
+                            - paragraph [ref=f12e54]: Your data stays yours — secure and controlled.
+    - main [ref=f12e55]:
+        - generic [ref=f12e57]:
+            - heading "Forgot password" [level=1] [ref=f12e58]
+            - paragraph [ref=f12e59]: Enter your email to receive a link to reset your password.
+            - generic [ref=f12e60]:
+                - generic [ref=f12e62]:
+                    - generic [ref=f12e63]:
+                        - generic [ref=f12e64]: Email
+                        - textbox "Email" [ref=f12e65]:
+                            - /placeholder: you@example.com
+                    - button "Send reset link" [ref=f12e66]
+                - paragraph [ref=f12e67]:
+                    - text: Remembered your password?
+                    - link "Sign in" [ref=f12e68] [cursor=pointer]:
+                        - /url: /auth/sign-in
