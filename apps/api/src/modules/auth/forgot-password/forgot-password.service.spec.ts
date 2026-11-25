@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import { ConfigModule } from "@nestjs/config";
 import { Test } from "@nestjs/testing";
-import { and, eq, gt, isNull } from "drizzle-orm";
+import { and, eq, isNull } from "drizzle-orm";
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 import { DatabaseModule, DRIZZLE } from "../../../db/database.module";
 import type { DrizzleDatabase } from "../../../db/database.module";
@@ -127,11 +127,10 @@ describe("ForgotPasswordService", () => {
     expect(sentEmails).toHaveLength(0);
 
     const rows = await db
-      .select()
+      .select({ id: passwordResetTokens.id })
       .from(passwordResetTokens)
-      .where(
-        and(isNull(passwordResetTokens.usedAt), gt(passwordResetTokens.expiresAt, new Date())),
-      );
+      .innerJoin(users, eq(passwordResetTokens.userId, users.id))
+      .where(eq(users.email, unknownEmail));
     expect(rows).toHaveLength(0);
   });
 

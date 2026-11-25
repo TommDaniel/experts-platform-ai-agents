@@ -9,7 +9,7 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: postgres
     ports:
-      - "5432:5432"
+      - "127.0.0.1:5432:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
     healthcheck:
@@ -23,15 +23,13 @@ services:
     container_name: cu-mimir
     command: -config.file=/etc/mimir/mimir.yaml
     ports:
-      - "9009:9009"
+      - "127.0.0.1:9009:9009"
     volumes:
       - mimir-data:/var/mimir
       - ./docker/mimir/mimir.yaml:/etc/mimir/mimir.yaml:ro
-    healthcheck:
-      test: ["CMD", "wget", "-q", "-O", "-", "http://localhost:9009/ready"]
-      interval: 10s
-      timeout: 3s
-      retries: 5
+    # The image is distroless (no shell, no wget/curl), so a Docker healthcheck
+    # cannot probe /ready. Check it from the host instead:
+    #   curl -fsS http://localhost:9009/ready
 
   loki:
     image: grafana/loki:3.7.6
@@ -39,24 +37,21 @@ services:
     user: "0"
     command: -config.file=/etc/loki/loki.yaml
     ports:
-      - "3100:3100"
+      - "127.0.0.1:3100:3100"
     volumes:
       - loki-data:/var/loki
       - ./docker/loki/loki.yaml:/etc/loki/loki.yaml:ro
-    healthcheck:
-      test: ["CMD", "wget", "-q", "-O", "-", "http://localhost:3100/ready"]
-      interval: 10s
-      timeout: 3s
-      retries: 5
+    # Distroless image: probe from the host instead:
+    #   curl -fsS http://localhost:3100/ready
 
   tempo:
     image: grafana/tempo:2.9.4
     container_name: cu-tempo
     command: -config.file=/etc/tempo/tempo.yaml
     ports:
-      - "3200:3200"
-      - "4317:4317"
-      - "4318:4318"
+      - "127.0.0.1:3200:3200"
+      - "127.0.0.1:4317:4317"
+      - "127.0.0.1:4318:4318"
     volumes:
       - tempo-data:/var/tempo
       - ./docker/tempo/tempo.yaml:/etc/tempo/tempo.yaml:ro
@@ -65,12 +60,11 @@ services:
     image: grafana/grafana:13.0.6
     container_name: cu-grafana
     environment:
-      GF_AUTH_ANONYMOUS_ENABLED: "true"
-      GF_AUTH_ANONYMOUS_ORG_ROLE: "Admin"
+      GF_AUTH_ANONYMOUS_ENABLED: "false"
       GF_SECURITY_ADMIN_USER: "admin"
-      GF_SECURITY_ADMIN_PASSWORD: "admin"
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD:-admin}
     ports:
-      - "3001:3000"
+      - "127.0.0.1:3001:3000"
     volumes:
       - grafana-data:/var/lib/grafana
       - ./docker/grafana/datasources:/etc/grafana/provisioning/datasources:ro
@@ -86,8 +80,8 @@ services:
     image: semitechnologies/weaviate:1.28.4
     container_name: cu-weaviate
     ports:
-      - "8080:8080"
-      - "50051:50051"
+      - "127.0.0.1:8080:8080"
+      - "127.0.0.1:50051:50051"
     environment:
       QUERY_DEFAULTS_LIMIT: 25
       AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: "true"
@@ -109,10 +103,11 @@ services:
       dockerfile: apps/agents/Dockerfile
     container_name: cu-agents
     ports:
-      - "2024:2024"
+      - "127.0.0.1:2024:2024"
+    env_file:
+      - path: .env.local
+        required: false
     environment:
-      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
-      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
       LANGSMITH_API_KEY: ${LANGSMITH_API_KEY:-}
       LANGCHAIN_TRACING_V2: ${LANGCHAIN_TRACING_V2:-false}
       LANGCHAIN_PROJECT: experts-local
@@ -120,6 +115,11 @@ services:
       WEAVIATE_HOST: weaviate
       WEAVIATE_PORT: "8080"
       UPLOADS_DIR: /uploads
+      OTEL_ENABLED: "true"
+      OTEL_SERVICE_NAME: agents
+      OTEL_TRACES_ENDPOINT: http://tempo:4318/v1/traces
+      OTEL_METRICS_ENDPOINT: http://mimir:9009/otlp/v1/metrics
+      OTEL_LOGS_ENDPOINT: http://loki:3100/otlp/v1/logs
     volumes:
       - ./uploads:/uploads
     depends_on:

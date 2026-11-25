@@ -28,3 +28,5 @@ Monorepo (Turborepo + bun) da plataforma de **gestão de agentes de IA customiza
 ## Documentação
 
 Contexto completo em `.docs/` (`ARCHITECTURE.md`, `DEVELOPMENT.md`, `QA.md`, `BUSINESS.md`, `DESIGN.md`, `DESIGN_SYSTEM.md`). Specs em `.specs/`, planos em `.plans/` e decisões (ADRs) em `.adrs/`.
+
+Observabilidade: stack local, token do MCP e sinais em [`.docs/OBSERVABILITY.md`](.docs/OBSERVABILITY.md); investigação e ação em [`.docs/runbooks/`](.docs/runbooks/README.md). Índice de ADRs em [`.adrs/README.md`](.adrs/README.md).

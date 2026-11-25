@@ -8,13 +8,12 @@ import type { NextFunction, Request, Response } from "express";
 
 const meter = metrics.getMeter("api.http");
 
+// Duration is emitted by @opentelemetry/instrumentation-http as
+// `http.server.request.duration` in seconds. Keeping a second histogram here
+// (milliseconds) produced duplicate buckets and an invalid p95, so this
+// middleware only owns the request counter.
 const requestCounter = meter.createCounter("http.server.request.count", {
   description: "Total number of HTTP requests received",
-});
-
-const requestDuration = meter.createHistogram("http.server.request.duration", {
-  description: "Time taken to serve an HTTP request",
-  unit: "ms",
 });
 
 export function httpMetricsMiddleware(
@@ -22,8 +21,6 @@ export function httpMetricsMiddleware(
   response: Response,
   next: NextFunction,
 ): void {
-  const start = performance.now();
-
   response.on("finish", () => {
     const route = request.route?.path;
     const attributes = {
@@ -34,7 +31,6 @@ export function httpMetricsMiddleware(
       [ATTR_HTTP_RESPONSE_STATUS_CODE]: String(response.statusCode ?? 0),
     };
     requestCounter.add(1, attributes);
-    requestDuration.record(performance.now() - start, attributes);
   });
 
   next();

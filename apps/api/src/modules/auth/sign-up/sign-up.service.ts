@@ -5,6 +5,7 @@ import { DRIZZLE } from "../../../db/database.module";
 import type { DrizzleDatabase } from "../../../db/database.module";
 import { emailConfirmationTokens, users } from "../../../db/schema";
 import { EmailService } from "../../shared/email/application/email.service";
+import { maskEmail } from "../../shared/logging/mask-email";
 import { PASSWORD_HASHER } from "../../shared/password/domain/password.port";
 import type { PasswordHasher } from "../../shared/password/domain/password.port";
 import { generateSessionToken, hashToken } from "../../shared/tokens/infrastructure/token.adapter";
@@ -74,7 +75,7 @@ export class SignUpService {
       // re-submitting the form retries the whole flow, and surface a generic
       // 500 with the real cause logged for observability.
       this.logger.error(
-        `Failed to send confirmation email to ${normalizedEmail}: ${error instanceof Error ? error.message : String(error)}`,
+        `Failed to send confirmation email to ${maskEmail(normalizedEmail)}: ${error instanceof Error ? error.message : String(error)}`,
       );
       await this.db.delete(users).where(eq(users.id, userId));
       throw new InternalServerErrorException("Failed to send confirmation email");

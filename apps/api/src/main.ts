@@ -3,6 +3,7 @@ import "reflect-metadata";
 import express from "express";
 import { NestFactory } from "@nestjs/core";
 import { AppModule } from "./app.module";
+import { accessLogMiddleware } from "./observability/access-log.middleware";
 import { httpMetricsMiddleware } from "./observability/http-metrics.middleware";
 import { ObservabilityLogger } from "./observability/observability.logger";
 import { shutdownObservability } from "./observability/observability";
@@ -14,6 +15,7 @@ async function bootstrap(): Promise<void> {
   });
   app.setGlobalPrefix("api/v1");
   app.use(httpMetricsMiddleware);
+  app.use(accessLogMiddleware);
   app.use("/api/v1/uploads", express.static(uploadsRootDir(), { fallthrough: false }));
   const port = Number(process.env.API_PORT ?? 3000);
   await app.listen(port);

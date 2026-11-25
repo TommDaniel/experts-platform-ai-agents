@@ -1,11 +1,34 @@
-import { Inject, Injectable, NotFoundException } from "@nestjs/common";
+import { Inject, Injectable, Logger, NotFoundException } from "@nestjs/common";
 import type { MessageEvent } from "@nestjs/common";
+import { context, metrics, SpanStatusCode, trace } from "@opentelemetry/api";
 import { and, asc, desc, eq } from "drizzle-orm";
 import { Observable } from "rxjs";
 import { DRIZZLE } from "../../db/database.module";
 import type { DrizzleDatabase } from "../../db/database.module";
 import { conversations, messages } from "../../db/schema";
 import { AgentsClient, threadIdFor } from "./agents.client";
+
+const tracer = trace.getTracer("api.chat");
+const meter = metrics.getMeter("api.chat");
+
+const messageCounter = meter.createCounter("chat.message.count", {
+  description: "Number of chat messages processed by result",
+});
+
+const streamDuration = meter.createHistogram("chat.stream.duration", {
+  description: "Time taken to stream a chat response",
+  unit: "ms",
+});
+
+type ChatOutcome = "success" | "error";
+
+function classifyChatError(error: unknown): string {
+  const message = error instanceof Error ? error.message : String(error);
+  if (/credential|api.?key|unauthorized|\b401\b/i.test(message)) return "provider_auth";
+  if (/econnrefused|enotfound|fetch failed|network/i.test(message)) return "agents_unavailable";
+  if (/timeout|timed out/i.test(message)) return "timeout";
+  return "unknown";
+}
 
 const GENERATED_MEDIA_PATTERN =
   /(https?:\/\/[^\s"')]+?\/api\/v1\/uploads\/generated\/(image|video)-[^\s"')]+)/;
@@ -42,6 +65,8 @@ function matchGeneratedMedia(content: string): { url: string; type: string } | u
 
 @Injectable()
 export class ChatService {
+  private readonly logger = new Logger(ChatService.name);
+
   constructor(
     @Inject(DRIZZLE) private readonly db: DrizzleDatabase,
     private readonly agentsClient: AgentsClient,
@@ -69,7 +94,18 @@ export class ChatService {
 
   streamMessage(userId: number, conversationId: number, content: string): Observable<MessageEvent> {
     return new Observable<MessageEvent>((subscriber) => {
-      void (async () => {
+      const startedAt = performance.now();
+      const span = tracer.startSpan("chat.stream", {
+        attributes: {
+          "chat.conversation.id": conversationId,
+          "user.id": userId,
+        },
+      });
+
+      void context.with(trace.setSpan(context.active(), span), async () => {
+        let outcome: ChatOutcome = "error";
+        let reason = "unknown";
+
         try {
           const conversation = await this.ensureOwned(userId, conversationId);
           await this.db.insert(messages).values({ conversationId, role: "user", content });
@@ -103,11 +139,11 @@ export class ChatService {
               const errorData = event.data as { error?: string; message?: string } | undefined;
               throw new Error(errorData?.message ?? errorData?.error ?? "Agent run failed");
             }
-            const content = extractEventContent(event);
-            if (content.length > prevLength) {
-              const delta = content.slice(prevLength);
+            const nextContent = extractEventContent(event);
+            if (nextContent.length > prevLength) {
+              const delta = nextContent.slice(prevLength);
               assistantContent += delta;
-              prevLength = content.length;
+              prevLength = nextContent.length;
               subscriber.next({ type: "token", data: { delta } });
             }
           }
@@ -124,6 +160,7 @@ export class ChatService {
             })
             .returning();
           if (!assistantRow) {
+            reason = "persist_failed";
             subscriber.next({
               type: "error",
               data: { message: "Failed to persist assistant message" },
@@ -136,16 +173,28 @@ export class ChatService {
             .set({ updatedAt: new Date() })
             .where(eq(conversations.id, conversationId));
 
+          outcome = "success";
           subscriber.next({ type: "done", data: { messageId: assistantRow.id } });
         } catch (err) {
+          reason = classifyChatError(err);
+          span.recordException(err instanceof Error ? err : new Error(String(err)));
+          span.setStatus({ code: SpanStatusCode.ERROR, message: reason });
+          this.logger.error(
+            `Chat stream failed for conversation ${conversationId} (user ${userId}): ${reason}`,
+          );
           subscriber.next({
             type: "error",
             data: { message: err instanceof Error ? err.message : String(err) },
           });
         } finally {
+          const attributes =
+            outcome === "success" ? { result: outcome } : { result: outcome, reason };
+          messageCounter.add(1, attributes);
+          streamDuration.record(performance.now() - startedAt, attributes);
+          span.end();
           subscriber.complete();
         }
-      })();
+      });
     });
   }
 

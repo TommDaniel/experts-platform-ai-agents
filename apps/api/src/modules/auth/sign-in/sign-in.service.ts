@@ -4,6 +4,7 @@ import { DRIZZLE } from "../../../db/database.module";
 import type { DrizzleDatabase } from "../../../db/database.module";
 import { users } from "../../../db/schema";
 import { EmailService } from "../../shared/email/application/email.service";
+import { maskEmail } from "../../shared/logging/mask-email";
 import { PASSWORD_HASHER } from "../../shared/password/domain/password.port";
 import type { PasswordHasher } from "../../shared/password/domain/password.port";
 import { SessionService } from "../session/session.service";
@@ -45,7 +46,7 @@ export class SignInService {
       await this.emailService.sendNewSessionEmail({ to: user.email });
     } catch (error) {
       this.logger.warn(
-        `Failed to send new-session email to ${user.email}: ${error instanceof Error ? error.message : String(error)}`,
+        `Failed to send new-session email to ${maskEmail(user.email)}: ${error instanceof Error ? error.message : String(error)}`,
       );
     }
 

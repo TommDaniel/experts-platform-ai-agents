@@ -1,3 +1,4 @@
+import "./dist/observability.js";
 import http from "node:http";
 import { graph } from "./dist/graph.js";
 

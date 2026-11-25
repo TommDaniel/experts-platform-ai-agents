@@ -1,5 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
+import { context, propagation } from "@opentelemetry/api";
 
 export interface ChatHistoryMessage {
   role: string;
@@ -37,9 +38,12 @@ export class AgentsClient {
     messages: ChatHistoryMessage[],
     userId: number,
   ): AsyncGenerator<{ event: string; data: unknown }> {
+    const headers: Record<string, string> = { "content-type": "application/json" };
+    propagation.inject(context.active(), headers);
+
     const response = await fetch(`${this.apiUrl}/runs/stream`, {
       method: "POST",
-      headers: { "content-type": "application/json" },
+      headers,
       body: JSON.stringify({
         input: { messages, expertSlug },
         config: { configurable: { userId } },

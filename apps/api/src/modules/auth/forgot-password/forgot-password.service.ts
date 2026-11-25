@@ -4,6 +4,7 @@ import { DRIZZLE } from "../../../db/database.module";
 import type { DrizzleDatabase } from "../../../db/database.module";
 import { passwordResetTokens, users } from "../../../db/schema";
 import { EmailService } from "../../shared/email/application/email.service";
+import { maskEmail } from "../../shared/logging/mask-email";
 import { generateSessionToken, hashToken } from "../../shared/tokens/infrastructure/token.adapter";
 
 const RESET_TOKEN_TTL_MS = 24 * 60 * 60 * 1000;
@@ -64,7 +65,7 @@ export class ForgotPasswordService {
       // persisted so the reset flow (spec 008) can still consume it, and the
       // user can simply request again.
       this.logger.warn(
-        `Failed to send password-reset email to ${user.email}: ${error instanceof Error ? error.message : String(error)}`,
+        `Failed to send password-reset email to ${maskEmail(user.email)}: ${error instanceof Error ? error.message : String(error)}`,
       );
     }
   }

@@ -4,6 +4,7 @@ import { DRIZZLE } from "../../../db/database.module";
 import type { DrizzleDatabase } from "../../../db/database.module";
 import { passwordResetTokens, users } from "../../../db/schema";
 import { EmailService } from "../../shared/email/application/email.service";
+import { maskEmail } from "../../shared/logging/mask-email";
 import { PASSWORD_HASHER } from "../../shared/password/domain/password.port";
 import type { PasswordHasher } from "../../shared/password/domain/password.port";
 import { hashToken } from "../../shared/tokens/infrastructure/token.adapter";
@@ -70,7 +71,7 @@ export class ResetPasswordService {
       // HTTP error (the password was changed successfully) nor roll back the
       // change, so it is only logged.
       this.logger.warn(
-        `Failed to send password-reset-success email to ${user.email}: ${error instanceof Error ? error.message : String(error)}`,
+        `Failed to send password-reset-success email to ${maskEmail(user.email)}: ${error instanceof Error ? error.message : String(error)}`,
       );
     }
   }
